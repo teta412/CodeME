@@ -81,12 +81,12 @@ const handleSubmit = async (e) => {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
     // specific message div 
-    const messageDiv = document.getElementById(uniqueId)
+    const messageDiv = document.getElementById(uniqueId);
 
     // messageDiv.innerHTML = "..."
-    loader(messageDiv)
+    loader(messageDiv);
 
-    const response = await fetch('https://chatbot-1z2w.onrender.com/', {
+    const response = await fetch('http://localhost:5000', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -96,20 +96,21 @@ const handleSubmit = async (e) => {
         })
     })
 
-    clearInterval(loadInterval)
-    messageDiv.innerHTML = " "
+    clearInterval(loadInterval);
+    messageDiv.innerHTML = '';
 
     if (response.ok) {
         const data = await response.json();
         const parsedData = data.bot.trim() // trims any trailing spaces/'\n' 
 
-        typeText(messageDiv, parsedData)
+        typeText(messageDiv, parsedData);
     } else {
-        const err = await response.text()
+        const err = await response.text();
 
-        messageDiv.innerHTML = "Something went wrong"
-        alert(err)
+        messageDiv.innerHTML = "Something went wrong";
+        alert(err);
     }
+
 }
 
 form.addEventListener('submit', handleSubmit)
